@@ -9,17 +9,15 @@ import Divider from "@mui/material/Divider";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 
+// Components
+import Todo from "./Todo";
+
 function TodoList() {
   return (
     <Container maxWidth="sm">
       <Card sx={{ minWidth: 275 }}>
         <CardContent>
-          <Typography
-            variant="h5"
-            style={{ textAlign: "center" }}
-            color="text.secondary"
-            gutterBottom
-          >
+          <Typography variant="h3" style={{ textAlign: "center" }} gutterBottom>
             My Tasks
           </Typography>
           <Divider />
@@ -37,6 +35,10 @@ function TodoList() {
             <ToggleButton value="right">Not</ToggleButton>
           </ToggleButtonGroup>
           {/* == Filter But == */}
+
+          {/* All Todos */}
+          <Todo />
+          {/* == All Todos == */}
         </CardContent>
         <CardActions>
           <Button size="small">Learn More</Button>
