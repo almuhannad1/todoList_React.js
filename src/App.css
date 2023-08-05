@@ -1,5 +1,6 @@
 body {
   background-color: #526b9e;
+  font-family: "T";
 }
 
 .iconButton {
@@ -12,11 +13,63 @@ body {
 }
 
 .todoCard {
-    transition: all 0.2s !important;
+  transition: all 0.2s !important;
 }
 
 .todoCard:hover {
-    padding-bottom: 20px;
-    padding-top: 20px;
-    box-shadow: 0px 7px 7px rgba(0, 0, 0, 0.4);
+  padding-bottom: 20px;
+  padding-top: 20px;
+  box-shadow: 0px 7px 7px rgba(0, 0, 0, 0.4);
 }
+
+/* CUSTOM FONTS */
+
+@font-face {
+  font-family: TitilliumWeb;
+  src: url("../public/fonts/TitilliumWeb-Black.ttf");
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: TitilliumWeb;
+  src: url("../public/fonts/TitilliumWeb-Bold.ttf");
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: TitilliumWeb;
+  src: url("../public/fonts/TitilliumWeb-BoldItalic.ttf");
+  font-weight: 750;
+}
+
+@font-face {
+  font-family: TitilliumWeb;
+  src: url("../public/fonts/TitilliumWeb-SemiBold.ttf");
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: TitilliumWeb;
+  src: url("../public/fonts/TitilliumWeb-SemiBoldItalic.ttf");
+  font-weight: 650;
+}
+
+@font-face {
+  font-family: TitilliumWeb;
+  src: url("../public/fonts/TitilliumWeb-Regular.ttf");
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: TitilliumWeb;
+  src: url("../public/fonts/TitilliumWeb-Light.ttf");
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: TitilliumWeb;
+  src: url("../public/fonts/TitilliumWeb-ExtraLight.ttf");
+  font-weight: normal;
+}
+
+/* == CUSTOM FONTS == */

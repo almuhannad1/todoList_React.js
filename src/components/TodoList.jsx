@@ -17,7 +17,11 @@ function TodoList() {
     <Container maxWidth="sm">
       <Card sx={{ minWidth: 275 }}>
         <CardContent>
-          <Typography variant="h3" style={{ textAlign: "center" }} gutterBottom>
+          <Typography
+            variant="h3"
+            style={{ textAlign: "center", fontWeight: 600 }}
+            gutterBottom
+          >
             My Tasks
           </Typography>
           <Divider />
