@@ -13,7 +13,28 @@ import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 
+// Others
+import { v4 as uuidv4 } from "uuid";
+
+const todos = [
+  {
+    id: uuidv4(),
+    title: "Read a book",
+    details: "ldsldfsdfdsfss",
+    isCompleted: false,
+  },
+  {
+    id: uuidv4(),
+    title: "Write a code",
+    details: "thyyy",
+    isCompleted: false,
+  },
+];
+
 function TodoList() {
+  const todosJsx = todos.map((t) => {
+    return <Todo key={t.id} title={t.title} details={t.details} />;
+  });
   return (
     <Container maxWidth="sm">
       <Card sx={{ minWidth: 275 }}>
@@ -42,7 +63,7 @@ function TodoList() {
           {/* == Filter But == */}
 
           {/* All Todos */}
-          <Todo />
+          {todosJsx}
           {/* == All Todos == */}
 
           {/* INPUT + ADD BUTTON */}

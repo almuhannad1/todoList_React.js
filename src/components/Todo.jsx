@@ -12,7 +12,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 //css
 import "../App.css";
 
-function Todo() {
+function Todo({ title, details }) {
   return (
     <>
       <Card
@@ -28,10 +28,10 @@ function Todo() {
           <Grid container spacing={2}>
             <Grid item xs={8}>
               <Typography variant="h5" sx={{ textAlign: "left" }}>
-                Task 1
+                {title}
               </Typography>
               <Typography variant="h6" sx={{ textAlign: "left" }}>
-                Details about the task num 1
+                {details}
               </Typography>
             </Grid>
             {/* Action Btn */}
