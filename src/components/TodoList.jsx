@@ -13,10 +13,15 @@ import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 
-// Others
+//Other
+import { TodosContext } from "../contexts/TodosContext";
+import { useContext } from "react";
+import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
-const todos = [
+//hook
+import { useState } from "react";
+const initialTodos = [
   {
     id: uuidv4(),
     title: "Read a book",
@@ -32,9 +37,23 @@ const todos = [
 ];
 
 function TodoList() {
+  const [todos, setTodos] = useState(initialTodos);
+  const [titleInput, setTitleInput] = useState("");
+
   const todosJsx = todos.map((t) => {
     return <Todo key={t.id} title={t.title} details={t.details} />;
   });
+
+  function handleAddClick() {
+    const newTodo = {
+      id: uuidv4(),
+      title: titleInput,
+      details: "",
+      isCompleted: false,
+    };
+    setTodos([...todos, newTodo]);
+    setTitleInput("")
+  }
   return (
     <Container maxWidth="sm">
       <Card sx={{ minWidth: 275 }}>
