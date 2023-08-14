@@ -14,41 +14,19 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 
 //Other
+import { useContext } from "react";
+import { TodosContext } from "../contexts/todosContext";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
-const initialTodos = [
-  {
-    id: uuidv4(),
-    title: "Read a book",
-    details: "ldsldfsdfdsfss",
-    isCompleted: false,
-  },
-  {
-    id: uuidv4(),
-    title: "Write a code",
-    details: "thyyy",
-    isCompleted: false,
-  },
-];
-
 function TodoList() {
-  const [todos, setTodos] = useState(initialTodos);
+  const { todos, setTodos } = useContext(TodosContext);
+
   const [titleInput, setTitleInput] = useState("");
 
   const todosJsx = todos.map((t) => {
-    return <Todo key={t.id} todos={t} handleCheck={handleCheckClick} />;
+    return <Todo key={t.id} todo={t} />;
   });
-
-  function handleCheckClick(todoId) {
-    const updatedTodos = todos.map((t) => {
-      if(t.id == todoId){
-        t.isCompleted = !t.isCompleted
-      }
-      return t 
-    })
-    setTodos(updatedTodos)
-  }
 
   function handleAddClick() {
     const newTodo = {

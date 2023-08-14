@@ -12,9 +12,21 @@ import DeleteIcon from "@mui/icons-material/Delete";
 //css
 import "../App.css";
 
-function Todo({ todos, handleCheck }) {
+//Other
+import { useContext } from "react";
+import { TodosContext } from "../contexts/todosContext";
+
+function Todo({ todo }) {
+  const { todos, setTodos } = useContext(TodosContext);
+
   function handleCheckBtnClicked() {
-    handleCheck(todos.id)
+    const updatedTodos = todos.map((t) => {
+      if (t.id == todo.id) {
+        t.isCompleted = !t.isCompleted
+      }
+      return t
+    })
+    setTodos(updatedTodos)
   }
   return (
     <>
@@ -31,10 +43,10 @@ function Todo({ todos, handleCheck }) {
           <Grid container spacing={2}>
             <Grid item xs={8}>
               <Typography variant="h5" sx={{ textAlign: "left" }}>
-                {todos.title}
+                {todo.title}
               </Typography>
               <Typography variant="h6" sx={{ textAlign: "left" }}>
-                {todos.details}
+                {todo.details}
               </Typography>
             </Grid>
             {/* Action Btn */}
@@ -54,8 +66,8 @@ function Todo({ todos, handleCheck }) {
                 className="iconButton"
                 aria-label="check"
                 style={{
-                  color: todos.isCompleted ? "white" : "#8bc34a",
-                  background: todos.isCompleted ? "#8bc34a" : "white",
+                  color: todo.isCompleted ? "white" : "#8bc34a",
+                  background: todo.isCompleted ? "#8bc34a" : "white",
                   border: "solid #8bc34a 3px",
                 }}
               >
