@@ -12,7 +12,10 @@ import DeleteIcon from "@mui/icons-material/Delete";
 //css
 import "../App.css";
 
-function Todo({ title, details }) {
+function Todo({ todos, handleCheck }) {
+  function handleCheckBtnClicked() {
+    handleCheck(todos.id)
+  }
   return (
     <>
       <Card
@@ -28,10 +31,10 @@ function Todo({ title, details }) {
           <Grid container spacing={2}>
             <Grid item xs={8}>
               <Typography variant="h5" sx={{ textAlign: "left" }}>
-                {title}
+                {todos.title}
               </Typography>
               <Typography variant="h6" sx={{ textAlign: "left" }}>
-                {details}
+                {todos.details}
               </Typography>
             </Grid>
             {/* Action Btn */}
@@ -42,17 +45,24 @@ function Todo({ title, details }) {
               justifyContent="space-around"
               alignItems="center"
             >
+
+              {/* Check Btn  */}
               <IconButton
+                onClick={() => {
+                  handleCheckBtnClicked()
+                }}
                 className="iconButton"
                 aria-label="check"
                 style={{
-                  color: "#8bc34a",
-                  background: "white",
+                  color: todos.isCompleted ? "white" : "#8bc34a",
+                  background: todos.isCompleted ? "#8bc34a" : "white",
                   border: "solid #8bc34a 3px",
                 }}
               >
                 <CheckIcon />
               </IconButton>
+              {/* === Check Btn === */}
+
               <IconButton
                 className="iconButton"
                 aria-label="edit"

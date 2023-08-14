@@ -14,13 +14,9 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 
 //Other
-import { TodosContext } from "../contexts/TodosContext";
-import { useContext } from "react";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
-//hook
-import { useState } from "react";
 const initialTodos = [
   {
     id: uuidv4(),
@@ -41,8 +37,18 @@ function TodoList() {
   const [titleInput, setTitleInput] = useState("");
 
   const todosJsx = todos.map((t) => {
-    return <Todo key={t.id} title={t.title} details={t.details} />;
+    return <Todo key={t.id} todos={t} handleCheck={handleCheckClick} />;
   });
+
+  function handleCheckClick(todoId) {
+    const updatedTodos = todos.map((t) => {
+      if(t.id == todoId){
+        t.isCompleted = !t.isCompleted
+      }
+      return t 
+    })
+    setTodos(updatedTodos)
+  }
 
   function handleAddClick() {
     const newTodo = {
@@ -99,6 +105,10 @@ function TodoList() {
                 label="Task title"
                 variant="outlined"
                 style={{ width: "100%" }}
+                value={titleInput}
+                onChange={(e) => {
+                  setTitleInput(e.target.value)
+                }}
               />
             </Grid>
 
@@ -112,6 +122,9 @@ function TodoList() {
               <Button
                 style={{ width: "100%", height: "100%" }}
                 variant="contained"
+                onClick={() => {
+                  handleAddClick()
+                }}
               >
                 ADD
               </Button>
