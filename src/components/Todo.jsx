@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
@@ -16,6 +17,7 @@ import "../App.css";
 import { useContext } from "react";
 import { TodosContext } from "../contexts/todosContext";
 
+// eslint-disable-next-line react/prop-types
 function Todo({ todo }) {
   const { todos, setTodos } = useContext(TodosContext);
 
