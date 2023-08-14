@@ -14,13 +14,23 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import "../App.css";
 
 //Other
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { TodosContext } from "../contexts/todosContext";
+
+//Dialog
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Button from '@mui/material/Button';
 
 // eslint-disable-next-line react/prop-types
 function Todo({ todo }) {
   const { todos, setTodos } = useContext(TodosContext);
+  const [showDeleteDialog, setshowDeleteDialog] = useState(false);
 
+  //Event Handlers
   function handleCheckBtnClicked() {
     const updatedTodos = todos.map((t) => {
       if (t.id == todo.id) {
@@ -30,8 +40,49 @@ function Todo({ todo }) {
     })
     setTodos(updatedTodos)
   }
+
+  function handleDeleteClick() {
+    setshowDeleteDialog(true)
+  }
+
+  function handleClose() {
+    setshowDeleteDialog(false)
+  }
+
+  function handleDeleteConfirm() {
+    const updatedTodos = todos.filter((t) => {
+      return t.id != todo.id 
+    })
+    setTodos(updatedTodos)
+  }
+  // === Event Handlers ===
+
   return (
     <>
+      {/* Delete Dialog */}
+      <Dialog
+        onClose={handleClose}
+        open={showDeleteDialog}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title" variant="h5" fontFamily={"TitilliumWeb"} fontWeight={"bold"} color={"black"}>
+          {"Are you sure to delete this task?!"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description" variant="h6" fontFamily={"TitilliumWeb"} fontWeight={600} color={"black"}>
+            You cannot undo deleting a task after it has been completed.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions >
+          <Button onClick={handleClose}>Close</Button>
+          <Button autoFocus onClick={handleDeleteConfirm}>
+            Yes, Delete a task
+          </Button>
+        </DialogActions>
+      </Dialog>
+      {/* === Delete Dialog === */}
+
       <Card
         className="todoCard"
         sx={{
@@ -88,6 +139,8 @@ function Todo({ todo }) {
               >
                 <EditOutlinedIcon />
               </IconButton>
+
+              {/* Delete Btn */}
               <IconButton
                 className="iconButton"
                 aria-label="delete"
@@ -96,9 +149,12 @@ function Todo({ todo }) {
                   background: "white",
                   border: "solid #EA1179 3px",
                 }}
+                onClick={handleDeleteClick}
               >
                 <DeleteIcon />
               </IconButton>
+              {/* === Delete Btn === */}
+
             </Grid>
             {/* == Action Btn == */}
           </Grid>
