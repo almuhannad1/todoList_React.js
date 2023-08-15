@@ -21,7 +21,6 @@ import { v4 as uuidv4 } from "uuid";
 
 function TodoList() {
   const { todos, setTodos } = useContext(TodosContext);
-
   const [titleInput, setTitleInput] = useState("");
 
   const todosJsx = todos.map((t) => {
@@ -35,9 +34,17 @@ function TodoList() {
       details: "",
       isCompleted: false,
     };
-    setTodos([...todos, newTodo]);
+
+    const updatedTodos = [...todos, newTodo]
+    setTodos(updatedTodos);
+
+    // save a items in local storage
+    localStorage.setItem("todos", JSON.stringify(updatedTodos))
+    // === save a items in local storage ===
+
     setTitleInput("")
   }
+
   return (
     <Container maxWidth="sm">
       <Card sx={{ minWidth: 275 }}>
