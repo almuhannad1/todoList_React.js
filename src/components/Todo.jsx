@@ -24,11 +24,14 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
 
 // eslint-disable-next-line react/prop-types
 function Todo({ todo }) {
   const { todos, setTodos } = useContext(TodosContext);
-  const [showDeleteDialog, setshowDeleteDialog] = useState(false);
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [showUpdateDialog, setShowUpdateDialog] = useState(false);
+  const [updateTodo, setUpdateTodo] = useState({ title: todo.title, details: todo.details })
 
   //Event Handlers
   function handleCheckBtnClicked() {
@@ -42,11 +45,19 @@ function Todo({ todo }) {
   }
 
   function handleDeleteClick() {
-    setshowDeleteDialog(true)
+    setShowDeleteDialog(true)
   }
 
-  function handleClose() {
-    setshowDeleteDialog(false)
+  function handleUpdateClick() {
+    setShowUpdateDialog(true)
+  }
+
+  function handleDeleteDialogClose() {
+    setShowDeleteDialog(false)
+  }
+
+  function handleUpdateClose() {
+    setShowUpdateDialog(false)
   }
 
   function handleDeleteConfirm() {
@@ -55,33 +66,97 @@ function Todo({ todo }) {
     })
     setTodos(updatedTodos)
   }
+
+  function handleUpdateConfirm() {
+    const updatedTodos = todos.map((t) => {
+      if (t.id === todo.id) {
+        return { ...t, title: updateTodo.title, details: updateTodo.details }
+      } else {
+        return t
+      }
+    })
+
+    setTodos(updatedTodos)
+    setShowUpdateDialog(false)
+  }
   // === Event Handlers ===
 
   return (
     <>
       {/* Delete Dialog */}
       <Dialog
-        onClose={handleClose}
+        onClose={handleDeleteDialogClose}
         open={showDeleteDialog}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title" variant="h5" fontFamily={"TitilliumWeb"} fontWeight={"bold"} color={"black"}>
-          {"Are you sure to delete this task?!"}
+        <DialogTitle id="alert-dialog-title" >
+          Are you sure to delete this task ?!
         </DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-description" variant="h6" fontFamily={"TitilliumWeb"} fontWeight={600} color={"black"}>
+          <DialogContentText id="alert-dialog-description" >
             You cannot undo deleting a task after it has been completed.
           </DialogContentText>
         </DialogContent>
         <DialogActions >
-          <Button onClick={handleClose}>Close</Button>
+          <Button onClick={handleDeleteDialogClose}>Close</Button>
           <Button autoFocus onClick={handleDeleteConfirm}>
             Yes, Delete a task
           </Button>
         </DialogActions>
       </Dialog>
       {/* === Delete Dialog === */}
+
+      {/* Update Dialog */}
+      <Dialog
+        onClose={handleUpdateClose}
+        open={showUpdateDialog}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title" variant="h5" fontFamily={"TitilliumWeb"} fontWeight={"bold"} color={"black"}>
+          Modify the task.
+        </DialogTitle>
+        <DialogContent>
+          {/*  task title textField */}
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="task title"
+            fullWidth
+            variant="standard"
+            value={updateTodo.title}
+            onChange={(e) => {
+              setUpdateTodo({ ...updateTodo, title: e.target.value })
+            }}
+          />
+          {/* === task title textField === */}
+
+          {/* details task textField */}
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="task details"
+            fullWidth
+            variant="standard"
+            value={updateTodo.details}
+            onChange={(e) => {
+              setUpdateTodo({ ...updateTodo, details: e.target.value })
+            }}
+          />
+          {/* === task details textField === */}
+
+        </DialogContent>
+        <DialogActions >
+          <Button onClick={handleUpdateClose}>Close</Button>
+          <Button autoFocus onClick={handleUpdateConfirm}>
+            Do, it
+          </Button>
+        </DialogActions>
+      </Dialog>
+      {/* === Update Dialog === */}
 
       <Card
         className="todoCard"
@@ -128,7 +203,9 @@ function Todo({ todo }) {
               </IconButton>
               {/* === Check Btn === */}
 
+              {/* Update Btn */}
               <IconButton
+                onClick={handleUpdateClick}
                 className="iconButton"
                 aria-label="edit"
                 style={{
@@ -139,6 +216,7 @@ function Todo({ todo }) {
               >
                 <EditOutlinedIcon />
               </IconButton>
+              {/* === Update Btn === */}
 
               {/* Delete Btn */}
               <IconButton

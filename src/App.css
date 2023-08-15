@@ -66,10 +66,4 @@ body {
   font-weight: 300;
 }
 
-@font-face {
-  font-family: TitilliumWeb;
-  src: url("../public/fonts/TitilliumWeb-ExtraLight.ttf");
-  font-weight: normal;
-}
-
 /* == CUSTOM FONTS == */
