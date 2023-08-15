@@ -51,7 +51,7 @@ function Todo({ todo }) {
 
   function handleDeleteConfirm() {
     const updatedTodos = todos.filter((t) => {
-      return t.id != todo.id 
+      return t.id != todo.id
     })
     setTodos(updatedTodos)
   }
