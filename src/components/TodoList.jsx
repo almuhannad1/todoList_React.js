@@ -14,9 +14,8 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 
 //Other
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import { TodosContext } from "../contexts/todosContext";
-import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 function TodoList() {
@@ -44,6 +43,15 @@ function TodoList() {
 
     setTitleInput("")
   }
+
+  // get a items in local storage
+  useEffect(() => {
+    const storageTodos = JSON.parse(localStorage.getItem("todos"));
+    setTodos(storageTodos)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+  // === get a items in local storage ===
+
 
   return (
     <Container maxWidth="sm">

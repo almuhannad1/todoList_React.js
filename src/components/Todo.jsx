@@ -41,7 +41,10 @@ function Todo({ todo }) {
       }
       return t
     })
-    setTodos(updatedTodos)
+    setTodos(updatedTodos);
+    // save check items in local storage
+    localStorage.setItem("todos", JSON.stringify(updatedTodos))
+    // === save check items in local storage ===
   }
 
   function handleDeleteClick() {
@@ -65,6 +68,9 @@ function Todo({ todo }) {
       return t.id != todo.id
     })
     setTodos(updatedTodos)
+    // save delete items in local storage
+    localStorage.setItem("todos", JSON.stringify(updatedTodos))
+    // === save delete items in local storage ===
   }
 
   function handleUpdateConfirm() {
@@ -77,6 +83,9 @@ function Todo({ todo }) {
     })
 
     setTodos(updatedTodos)
+    // save update items in local storage
+    localStorage.setItem("todos", JSON.stringify(updatedTodos))
+    // === save update items in local storage ===
     setShowUpdateDialog(false)
   }
   // === Event Handlers ===
