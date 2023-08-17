@@ -21,10 +21,32 @@ import { v4 as uuidv4 } from "uuid";
 function TodoList() {
   const { todos, setTodos } = useContext(TodosContext);
   const [titleInput, setTitleInput] = useState("");
+  const [displayedTodosType, setDisplayedTodosType] = useState("all")
 
-  const todosJsx = todos.map((t) => {
+  //filteration arrays
+  const completedTodos = todos.filter((t) => {
+    return t.isCompleted
+  })
+
+  const notCompletedTodos = todos.filter((t) => {
+    return !t.isCompleted
+  })
+
+  let todosToBeRendered = todos
+
+  if (displayedTodosType == "completed") {
+    todosToBeRendered = completedTodos
+  } else if (displayedTodosType == "non-completed") {
+    todosToBeRendered = notCompletedTodos
+  } else {
+    todosToBeRendered = todos
+  }
+
+  const todosJsx = todosToBeRendered.map((t) => {
     return <Todo key={t.id} todo={t} />;
   });
+
+  // === filteration arrays ===
 
   function handleAddClick() {
     const newTodo = {
@@ -48,9 +70,13 @@ function TodoList() {
   useEffect(() => {
     const storageTodos = JSON.parse(localStorage.getItem("todos"));
     setTodos(storageTodos)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   // === get a items in local storage ===
+
+  function changeDisplayedType(e) {
+    setDisplayedTodosType(e.target.value)
+  }
 
 
   return (
@@ -68,15 +94,15 @@ function TodoList() {
 
           {/* Filter But */}
           <ToggleButtonGroup
-            // value={alignment}
+            value={displayedTodosType}
             exclusive
-            // onChange={handleAlignment}
+            onChange={changeDisplayedType}
             aria-label="text alignment"
             style={{ margin: "10px 36%" }}
           >
-            <ToggleButton value="left">All</ToggleButton>
-            <ToggleButton value="center">Done</ToggleButton>
-            <ToggleButton value="right">Not</ToggleButton>
+            <ToggleButton value="all">All</ToggleButton>
+            <ToggleButton value="completed">Done</ToggleButton>
+            <ToggleButton value="non-completed">Not</ToggleButton>
           </ToggleButtonGroup>
           {/* == Filter But == */}
 
