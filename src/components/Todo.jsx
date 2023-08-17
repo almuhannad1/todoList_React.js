@@ -21,15 +21,13 @@ import { TodosContext } from "../contexts/todosContext";
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 
 // eslint-disable-next-line react/prop-types
-function Todo({ todo }) {
+function Todo({ todo, showDelete }) {
   const { todos, setTodos } = useContext(TodosContext);
-  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [showUpdateDialog, setShowUpdateDialog] = useState(false);
   const [updateTodo, setUpdateTodo] = useState({ title: todo.title, details: todo.details })
 
@@ -48,29 +46,15 @@ function Todo({ todo }) {
   }
 
   function handleDeleteClick() {
-    setShowDeleteDialog(true)
+    showDelete(todo)
   }
 
   function handleUpdateClick() {
     setShowUpdateDialog(true)
   }
 
-  function handleDeleteDialogClose() {
-    setShowDeleteDialog(false)
-  }
-
   function handleUpdateClose() {
     setShowUpdateDialog(false)
-  }
-
-  function handleDeleteConfirm() {
-    const updatedTodos = todos.filter((t) => {
-      return t.id != todo.id
-    })
-    setTodos(updatedTodos)
-    // save delete items in local storage
-    localStorage.setItem("todos", JSON.stringify(updatedTodos))
-    // === save delete items in local storage ===
   }
 
   function handleUpdateConfirm() {
@@ -92,29 +76,6 @@ function Todo({ todo }) {
 
   return (
     <>
-      {/* Delete Dialog */}
-      <Dialog
-        onClose={handleDeleteDialogClose}
-        open={showDeleteDialog}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title" >
-          Are you sure to delete this task ?!
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description" >
-            You cannot undo deleting a task after it has been completed.
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions >
-          <Button onClick={handleDeleteDialogClose}>Close</Button>
-          <Button autoFocus onClick={handleDeleteConfirm}>
-            Yes, Delete a task
-          </Button>
-        </DialogActions>
-      </Dialog>
-      {/* === Delete Dialog === */}
 
       {/* Update Dialog */}
       <Dialog
