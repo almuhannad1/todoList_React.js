@@ -99,6 +99,7 @@ function TodoList() {
             onChange={changeDisplayedType}
             aria-label="text alignment"
             style={{ margin: "10px 36%" }}
+            color="primary"
           >
             <ToggleButton value="all">All</ToggleButton>
             <ToggleButton value="completed">Done</ToggleButton>

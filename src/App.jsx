@@ -9,6 +9,12 @@ import { v4 as uuidv4 } from "uuid";
 const theme = createTheme({
   typography: {
     fontFamily: ["TitilliumWeb"],
+  },
+
+  palette: {
+    primary: {
+      main: "#ff3d00",
+    }
   }
 });
 
