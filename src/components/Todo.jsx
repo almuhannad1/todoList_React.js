@@ -14,22 +14,14 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import "../App.css";
 
 //Other
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { TodosContext } from "../contexts/todosContext";
 
-//Dialog
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-
 // eslint-disable-next-line react/prop-types
-function Todo({ todo, showDelete }) {
+function Todo({ todo, showDelete, showUpdate }) {
   const { todos, setTodos } = useContext(TodosContext);
-  const [showUpdateDialog, setShowUpdateDialog] = useState(false);
-  const [updateTodo, setUpdateTodo] = useState({ title: todo.title, details: todo.details })
+  // const [updateTodo, setUpdateTodo] = useState({ title: todo.title, details: todo.details })
+
 
   //Event Handlers
   function handleCheckBtnClicked() {
@@ -50,83 +42,13 @@ function Todo({ todo, showDelete }) {
   }
 
   function handleUpdateClick() {
-    setShowUpdateDialog(true)
+    showUpdate(todo)
   }
 
-  function handleUpdateClose() {
-    setShowUpdateDialog(false)
-  }
-
-  function handleUpdateConfirm() {
-    const updatedTodos = todos.map((t) => {
-      if (t.id === todo.id) {
-        return { ...t, title: updateTodo.title, details: updateTodo.details }
-      } else {
-        return t
-      }
-    })
-
-    setTodos(updatedTodos)
-    // save update items in local storage
-    localStorage.setItem("todos", JSON.stringify(updatedTodos))
-    // === save update items in local storage ===
-    setShowUpdateDialog(false)
-  }
   // === Event Handlers ===
 
   return (
     <>
-
-      {/* Update Dialog */}
-      <Dialog
-        onClose={handleUpdateClose}
-        open={showUpdateDialog}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title" variant="h5" fontFamily={"TitilliumWeb"} fontWeight={"bold"} color={"black"}>
-          Modify the task.
-        </DialogTitle>
-        <DialogContent>
-          {/*  task title textField */}
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="task title"
-            fullWidth
-            variant="standard"
-            value={updateTodo.title}
-            onChange={(e) => {
-              setUpdateTodo({ ...updateTodo, title: e.target.value })
-            }}
-          />
-          {/* === task title textField === */}
-
-          {/* details task textField */}
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="task details"
-            fullWidth
-            variant="standard"
-            value={updateTodo.details}
-            onChange={(e) => {
-              setUpdateTodo({ ...updateTodo, details: e.target.value })
-            }}
-          />
-          {/* === task details textField === */}
-
-        </DialogContent>
-        <DialogActions >
-          <Button onClick={handleUpdateClose}>Close</Button>
-          <Button autoFocus onClick={handleUpdateConfirm}>
-            Do, it
-          </Button>
-        </DialogActions>
-      </Dialog>
-      {/* === Update Dialog === */}
 
       <Card
         className="todoCard"

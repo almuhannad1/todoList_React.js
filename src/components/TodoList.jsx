@@ -31,6 +31,8 @@ function TodoList() {
   const [displayedTodosType, setDisplayedTodosType] = useState("all");
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [dialogTodo, setDialogTodo] = useState(null)
+  const [showUpdateDialog, setShowUpdateDialog] = useState(false);
+ 
 
   //filteration arrays
   const completedTodos = useMemo(() => {
@@ -54,10 +56,6 @@ function TodoList() {
   } else {
     todosToBeRendered = todos
   }
-
-  const todosJsx = todosToBeRendered.map((t) => {
-    return <Todo key={t.id} todo={t} showDelete={openDeleteDialog} />;
-  });
 
   // === filteration arrays ===
 
@@ -101,6 +99,30 @@ function TodoList() {
     setShowDeleteDialog(false)
   }
 
+  function openUpdateDialog(todo) {
+    setDialogTodo(todo)
+    setShowUpdateDialog(true)
+  }
+  function handleUpdateClose() {
+    setShowUpdateDialog(false)
+  }
+
+  function handleUpdateConfirm() {
+    const updatedTodos = todos.map((t) => {
+      if (t.id == dialogTodo.id) {
+        return { ...t, title: dialogTodo.title, details: dialogTodo.details }
+      } else {
+        return t
+      }
+    })
+
+    setTodos(updatedTodos)
+    // save update items in local storage
+    localStorage.setItem("todos", JSON.stringify(updatedTodos))
+    // === save update items in local storage ===
+    setShowUpdateDialog(false)
+  }
+
   // === handlers ===
 
   // get a items in local storage
@@ -114,6 +136,10 @@ function TodoList() {
   function changeDisplayedType(e) {
     setDisplayedTodosType(e.target.value)
   }
+
+  const todosJsx = todosToBeRendered.map((t) => {
+    return <Todo key={t.id} todo={t} showDelete={openDeleteDialog} showUpdate={openUpdateDialog} />;
+  });
 
 
   return (
@@ -141,6 +167,57 @@ function TodoList() {
         </DialogActions>
       </Dialog>
       {/* === Delete Dialog === */}
+
+      {/* Update Dialog */}
+      <Dialog
+        onClose={handleUpdateClose}
+        open={showUpdateDialog}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title" variant="h5" fontFamily={"TitilliumWeb"} fontWeight={"bold"} color={"black"}>
+          Modify the task.
+        </DialogTitle>
+        <DialogContent>
+          {/*  task title textField */}
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="task title"
+            fullWidth
+            variant="standard"
+            value={dialogTodo?.title}
+            onChange={(e) => {
+              setDialogTodo({ ...dialogTodo, title: e.target.value })
+            }}
+          />
+          {/* === task title textField === */}
+
+          {/* details task textField */}
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="task details"
+            fullWidth
+            variant="standard"
+            value={dialogTodo?.details}
+            onChange={(e) => {
+              setDialogTodo({ ...dialogTodo, details: e.target.value })
+            }}
+          />
+          {/* === task details textField === */}
+
+        </DialogContent>
+        <DialogActions >
+          <Button onClick={handleUpdateClose}>Close</Button>
+          <Button autoFocus onClick={handleUpdateConfirm}>
+            Do, it
+          </Button>
+        </DialogActions>
+      </Dialog>
+      {/* === Update Dialog === */}
 
       <Container maxWidth="sm">
         <Card sx={{ minWidth: 275 }} style={{ maxHeight: "80vh", overflow: "scroll" }}>
