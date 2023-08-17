@@ -8,7 +8,7 @@
 
 -------
 
-__[https://nodeca.github.io/pica/demo/](https://cutt.ly/dwg2zWum)__
+__(https://rad-bublanina-d5ce0f.netlify.app)__
 
 ---------
 
