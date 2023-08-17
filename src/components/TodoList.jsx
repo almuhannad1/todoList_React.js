@@ -145,6 +145,7 @@ function TodoList() {
                 onClick={() => {
                   handleAddClick()
                 }}
+                disabled={titleInput.length == 0}
               >
                 ADD
               </Button>
