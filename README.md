@@ -8,7 +8,7 @@
 
 -------
 
-__(https://nodeca.github.io/pica/demo/)__
+__[https://nodeca.github.io/pica/demo/](https://cutt.ly/dwg2zWum)__
 
 ---------
 
