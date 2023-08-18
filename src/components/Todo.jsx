@@ -16,12 +16,12 @@ import "../App.css";
 //Other
 import { useContext } from "react";
 import { TodosContext } from "../contexts/todosContext";
+import { ToastContext } from "../contexts/ToastContext";
 
 // eslint-disable-next-line react/prop-types
 function Todo({ todo, showDelete, showUpdate }) {
   const { todos, setTodos } = useContext(TodosContext);
-  // const [updateTodo, setUpdateTodo] = useState({ title: todo.title, details: todo.details })
-
+  const { showHideToast } = useContext(ToastContext)
 
   //Event Handlers
   function handleCheckBtnClicked() {
@@ -35,6 +35,7 @@ function Todo({ todo, showDelete, showUpdate }) {
     // save check items in local storage
     localStorage.setItem("todos", JSON.stringify(updatedTodos))
     // === save check items in local storage ===
+    showHideToast("Modified successfully. ")
   }
 
   function handleDeleteClick() {

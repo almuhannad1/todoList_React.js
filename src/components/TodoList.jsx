@@ -22,17 +22,20 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 //Other
 import { useContext, useState, useEffect, useMemo } from "react";
+import { ToastContext } from "../contexts/ToastContext";
 import { TodosContext } from "../contexts/todosContext";
 import { v4 as uuidv4 } from "uuid";
 
 function TodoList() {
   const { todos, setTodos } = useContext(TodosContext);
+  const { showHideToast } = useContext(ToastContext)
+
   const [titleInput, setTitleInput] = useState("");
   const [displayedTodosType, setDisplayedTodosType] = useState("all");
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [dialogTodo, setDialogTodo] = useState(null)
   const [showUpdateDialog, setShowUpdateDialog] = useState(false);
- 
+
 
   //filteration arrays
   const completedTodos = useMemo(() => {
@@ -75,8 +78,8 @@ function TodoList() {
     // save a items in local storage
     localStorage.setItem("todos", JSON.stringify(updatedTodos))
     // === save a items in local storage ===
-
     setTitleInput("")
+    showHideToast("Added successfully.")
   }
 
   function openDeleteDialog(todo) {
@@ -97,6 +100,7 @@ function TodoList() {
     localStorage.setItem("todos", JSON.stringify(updatedTodos))
     // === save delete items in local storage ===
     setShowDeleteDialog(false)
+    showHideToast("Deleted successfully.")
   }
 
   function openUpdateDialog(todo) {
@@ -121,6 +125,8 @@ function TodoList() {
     localStorage.setItem("todos", JSON.stringify(updatedTodos))
     // === save update items in local storage ===
     setShowUpdateDialog(false)
+    showHideToast("Update completed successfully.")
+
   }
 
   // === handlers ===
