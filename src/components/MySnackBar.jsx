@@ -5,6 +5,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import MuiAlert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 
+// eslint-disable-next-line react/prop-types
 export default function MySnackBar({ open, message }) {
 
 
